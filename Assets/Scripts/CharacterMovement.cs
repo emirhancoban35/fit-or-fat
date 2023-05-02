@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GG.Infrastructure.Utils.Swipe;
+using Zenject;
+
 
 public class CharacterMovement : MonoBehaviour
 {
@@ -13,7 +15,7 @@ public class CharacterMovement : MonoBehaviour
 
     public Transform player;
 
-    public GameManager gameManager;
+    private GameManager gameManager;
 
     public CharcterAnims charcterAnims;
 
@@ -42,6 +44,17 @@ public class CharacterMovement : MonoBehaviour
     }
 
     #endregion
+    
+        #region
+    [Inject]
+    public void Setup(GameManager GameManager)
+    {
+        this.gameManager = GameManager;
+        gameManager.GameManagerStateChanged();
+
+    }
+    #endregion
+    
     private void LateUpdate()
     {
         player.transform.position += player.transform.forward * Time.deltaTime * speed;
